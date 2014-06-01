@@ -8,11 +8,11 @@ gem 'haml',  '4.0.5'
 
 group :development, :test do
   gem 'sqlite3', '1.3.9'
-  gem 'rspec-rails', '2.13.1'
+  gem 'rspec-rails', '2.14.2'
   gem 'spork-rails', '4.0.0'
-  gem 'guard-spork', '1.5.0'
-  gem 'guard-rspec', '2.5.0'
-  gem 'childprocess', '0.3.6'
+  gem 'guard-spork', '1.5.1'
+  gem 'guard-rspec', '4.2.9'
+  gem 'childprocess', '0.5.3'
   gem 'erb2haml'
 end
 
