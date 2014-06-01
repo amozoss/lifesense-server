@@ -1,6 +1,4 @@
-lifesense-server
-================
+RTime
+===========================
 
-Senior project rails server
-
-
+A rails app for like my other repo time\_tracker
