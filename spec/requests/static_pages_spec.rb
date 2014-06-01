@@ -4,15 +4,15 @@ describe "StaticPages" do
 
   describe "Home page" do
 
-    it "should have the content 'Time Tracker'" do
+    it "should have the content 'LifeSense'" do
       visit root_path
-      expect(page).to have_content('Time Tracker')
+      expect(page).to have_content('LifeSense')
     end
 
     it "should have the base title" do
       visit root_path
-      expect(page).to have_content('Time Tracker')
-      expect(page).to have_title("Time Tracker")
+      expect(page).to have_content('LifeSense')
+      expect(page).to have_title("LifeSense")
     end
 
     it "should not have a custom page title" do
@@ -31,7 +31,7 @@ describe "StaticPages" do
 
     it "should have the title 'Help'" do
       visit help_path
-      expect(page).to have_title("Time Tracker | Help")
+      expect(page).to have_title("LifeSense | Help")
     end
   end
 
@@ -44,7 +44,7 @@ describe "StaticPages" do
 
     it "should have the title 'About'" do
       visit about_path
-      expect(page).to have_title("Time Tracker | About")
+      expect(page).to have_title("LifeSense | About")
     end
   end
 
