@@ -4,6 +4,8 @@ ruby '2.1.2'
 
 gem 'rails', '4.1.1'
 gem 'bootstrap-sass', '3.1.1'
+gem 'sprockets', '2.11.0'
+gem 'bcrypt', '~> 3.1.2'
 gem 'haml',  '4.0.5'
 
 group :development, :test do
