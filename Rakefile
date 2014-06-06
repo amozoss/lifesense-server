@@ -3,4 +3,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-RTime::Application.load_tasks
+LifeSense::Application.load_tasks
