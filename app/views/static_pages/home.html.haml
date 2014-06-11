@@ -1,7 +1,12 @@
-.center.hero-unit
-  %h1 LifeSense
-  %p
-    LifeSense will track anything. Well right now it just tracks time (almost).
-  = link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary"
-  %p
-    View our meeting log #{link_to "here", meeting_path}.
+- if signed_in?
+  .row
+    %aside.span4
+      %p This is home
+- else
+  .center.hero-unit
+    %h1 LifeSense
+    %p
+      LifeSense will track anything. Well right now it just tracks time (almost).
+    = link_to "Sign up now!", signup_path, class: "btn btn-large btn-primary"
+    %p
+      View our meeting log #{link_to "here", meeting_path}.
