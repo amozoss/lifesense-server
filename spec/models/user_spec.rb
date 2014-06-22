@@ -17,6 +17,8 @@ describe User do
   it { should respond_to(:remember_token) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
+  it { should respond_to(:projects) }
+
 
   it { should be_valid }
   it { should_not be_admin }
@@ -122,5 +124,29 @@ describe User do
   describe "remember token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
+  end
+
+  describe "project associations" do
+
+    before { @user.save }
+    let!(:older_project) do
+      FactoryGirl.create(:project, user: @user, created_at: 1.day.ago)
+    end
+    let!(:newer_project) do
+      FactoryGirl.create(:project, user: @user, created_at: 1.hour.ago)
+    end
+
+    it "should have the right projects in the right order" do
+      expect(@user.projects.to_a).to eq [newer_project, older_project]
+    end
+
+    it "should destroy associated projects" do
+      projects = @user.projects.to_a
+      @user.destroy
+      expect(projects).not_to be_empty
+      projects.each do |project|
+        expect(Project.where(id: project.id)).to be_empty
+      end
+    end
   end
 end

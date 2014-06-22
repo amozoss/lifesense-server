@@ -5,4 +5,10 @@
       %h1
         = gravatar_for @user
         = @user.name
+  .span8
+    - if @user.projects.any?
+      %h3
+        Projects (#{@user.projects.count})
+      %ol.projects= render @projects
+      = will_paginate @projects
 
