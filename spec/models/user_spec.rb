@@ -18,6 +18,7 @@ describe User do
   it { should respond_to(:authenticate) }
   it { should respond_to(:admin) }
   it { should respond_to(:projects) }
+  it { should respond_to(:feed) }
 
 
   it { should be_valid }
@@ -147,6 +148,16 @@ describe User do
       projects.each do |project|
         expect(Project.where(id: project.id)).to be_empty
       end
+    end
+
+    describe "status" do
+      let(:unfollowed_post) do
+        FactoryGirl.create(:project, user: FactoryGirl.create(:user))
+      end
+
+      its(:feed) { should include(newer_project) }
+      its(:feed) { should include(older_project) }
+      its(:feed) { should_not include(unfollowed_post) }
     end
   end
 end
