@@ -1,7 +1,8 @@
 - if signed_in?
   .row
     %aside.span4
-      %p This is home
+      %section= render 'shared/user_info'
+      %section= render 'shared/project_form'
 - else
   .center.hero-unit
     %h1 LifeSense

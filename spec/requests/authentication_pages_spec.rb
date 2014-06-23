@@ -70,6 +70,19 @@ describe "Authentication" do
         end
       end
 
+      describe "in the Projects controller" do
+
+        describe "submitting to the create action" do
+          before { post projects_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete project_path(FactoryGirl.create(:project)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
+
       describe "in the Users controller" do
 
         describe "visiting the edit page" do
