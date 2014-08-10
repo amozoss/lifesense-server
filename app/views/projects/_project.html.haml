@@ -1,5 +1,5 @@
 %li
-  %span.name= project.name
+  %span.name= link_to project.name, project
   %span.timestamp
     Created #{time_ago_in_words(project.created_at)} ago.
   - if current_user?(project.user)

@@ -1,6 +1,9 @@
 class ProjectsController < ApplicationController
-  before_action :signed_in_user, only: [:create, :destroy]
-  before_action :correct_user,   only: :destroy
+  before_action :signed_in_user, only: [:create, :destroy, :show]
+  before_action :correct_user,   only: [:show, :destroy]
+
+  def show
+  end
 
   def create
     @project = current_user.projects.build(project_params)
@@ -25,7 +28,11 @@ class ProjectsController < ApplicationController
   end
 
   def correct_user
-    @project = current_user.projects.find_by(id: params[:id])
-    redirect_to root_url if @project.nil?
+    if  params[:project_id]
+      @project = current_user.projects.find_by(id: params[:project_id])
+    else
+      @project = current_user.projects.find_by(id: params[:id])
+    end
+    render_404 if @project.nil?
   end
 end

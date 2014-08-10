@@ -1,9 +1,6 @@
 
 %li{id: feed_item.id}
-  = link_to gravatar_for(feed_item.user), feed_item.user
-  %span.user
-    = link_to feed_item.user.name, feed_item.user
-  %span.name= feed_item.name
+  %span.name= link_to feed_item.name, users_project_path(feed_item.user.id, feed_item.id)
   %span.timestamp
     Created #{time_ago_in_words(feed_item.created_at)} ago.
   - if current_user?(feed_item.user)

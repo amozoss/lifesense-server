@@ -1,7 +1,8 @@
 LifeSense::Application.routes.draw do
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :projects, only: [:create, :destroy]
+  resources :projects, only: [:show, :create, :destroy]
+  get       "/users/:user_id/projects/:project_id", to:  "projects#show", as: :users_project
 
   root 'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'
