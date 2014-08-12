@@ -1,3 +1,22 @@
 - provide(:title, 'Project')
 
-=@project.name
+%h1
+  =@project.name
+%p
+  -total_seconds = @project.total_time
+  %b
+    Total Time:
+
+  =Time.at(total_seconds).utc.strftime("%H:%M:%S")
+  =distance_of_time_in_words(total_seconds)
+
+.row
+  %aside.span4
+    %section= render 'shared/time_record_form'
+
+.span8
+  - if @project.time_records.any?
+    %h3
+      Time Records (#{@project.time_records.count})
+    %ol.time_records= render @time_records
+    = will_paginate @time_records

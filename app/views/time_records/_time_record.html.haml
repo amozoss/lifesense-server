@@ -1,0 +1,12 @@
+%li
+  %span.description= time_record.description
+  %span.timestamp
+    - if time_record.started_at and time_record.ended_at != nil
+      Total #{distance_of_time_in_words(time_record.started_at, time_record.ended_at)} .
+    - elsif time_record.started_at != nil 
+      Started #{time_ago_in_words(time_record.started_at)} ago.
+  - if current_user?(time_record.project.user)
+    = link_to "delete", time_record, method: :delete, |
+      data: { confirm: "You sure?" },               |
+      title: time_record.description                      |
+

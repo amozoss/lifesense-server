@@ -1,8 +1,10 @@
 class ProjectsController < ApplicationController
   before_action :signed_in_user, only: [:create, :destroy, :show]
-  before_action :correct_user,   only: [:show, :destroy]
+  before_action :correct_user, only: [:destroy, :show]
 
   def show
+    @time_record = @project.time_records.build if signed_in?
+    @time_records = @project.time_records.paginate(page: params[:page])
   end
 
   def create
@@ -30,7 +32,7 @@ class ProjectsController < ApplicationController
   def correct_user
     if  params[:project_id]
       @project = current_user.projects.find_by(id: params[:project_id])
-    else
+    elsif params[:id]
       @project = current_user.projects.find_by(id: params[:id])
     end
     render_404 if @project.nil?

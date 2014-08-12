@@ -83,6 +83,19 @@ describe "Authentication" do
         end
       end
 
+      describe "in the Time Records controller" do
+
+        describe "submitting to the create action" do
+          before { post time_records_path }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { delete time_record_path(FactoryGirl.create(:time_record)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+      end
+
       describe "in the Users controller" do
 
         describe "visiting the edit page" do
@@ -111,12 +124,12 @@ describe "Authentication" do
       describe "submitting a GET request to the Users#edit action" do
         before { get edit_user_path(wrong_user) }
         specify { expect(response.body).not_to match(full_title('Edit user')) }
-        specify { expect(response).to redirect_to(root_url) }
+        specify { expect(response.status).to eq(404) }
       end
 
       describe "submitting a PATCH request to the Users#update action" do
         before { patch user_path(wrong_user) }
-        specify { expect(response).to redirect_to(root_url) }
+        specify { expect(response.status).to eq(404) }
       end
     end
 

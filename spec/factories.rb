@@ -14,4 +14,10 @@ FactoryGirl.define do
     name "Lorem ipsum"
     user
   end
+
+  factory :time_record do
+    description "Lorem ipsum"
+    project
+  end
+
 end

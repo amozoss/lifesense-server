@@ -41,5 +41,36 @@ describe "ProjectPages" do
         expect { click_link "delete" }.to change(Project, :count).by(-1)
       end
     end
+
+    describe "as wrong user" do
+      let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
+      before { sign_in wrong_user, no_capybara: true }
+
+      before { visit users_project_path(user.id, project.id) }
+
+      it "should not delete a project" do
+        expect { click_link "delete" }.to not_change(Project, :count).by(-1)
+      end
+    end
+  end
+
+  describe "project page" do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:project) { FactoryGirl.create(:project, user: user, name: "Foo") }
+    let!(:m1) { FactoryGirl.create(:time_record, project: project, started_at: 2.hours.ago, ended_at: 1.hour.ago, description: "Foo") }
+    let!(:m2) { FactoryGirl.create(:time_record, project: project, started_at: 1.hour.ago, ended_at: 1.minute.ago, description: "Foo") }
+
+
+    before do
+      visit project_path(project)
+      sign_in user
+    end
+
+    it { should have_content(project.name) }
+    
+    describe "time_records" do
+      it { should have_content(m1.description) }
+      it { should have_content(m2.description) }
+    end
   end
 end
