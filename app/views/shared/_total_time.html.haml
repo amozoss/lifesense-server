@@ -1,0 +1,5 @@
+- mm, ss = @total_seconds.divmod(60)       
+- hh, mm = mm.divmod(60)       
+- dd, hh = hh.divmod(24)      
+- time = "%d days, %d hours, %d minutes, %d seconds" % [dd, hh, mm, ss]
+=time

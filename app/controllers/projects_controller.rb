@@ -25,16 +25,16 @@ class ProjectsController < ApplicationController
 
   private 
 
-  def project_params
-    params.require(:project).permit(:name)
-  end
-
-  def correct_user
-    if  params[:project_id]
-      @project = current_user.projects.find_by(id: params[:project_id])
-    elsif params[:id]
-      @project = current_user.projects.find_by(id: params[:id])
+    def project_params
+      params.require(:project).permit(:name)
     end
-    render_404 if @project.nil?
-  end
+
+    def correct_user
+      if  params[:project_id]
+        @project = current_user.projects.find_by(id: params[:project_id])
+      elsif params[:id]
+        @project = current_user.projects.find_by(id: params[:id])
+      end
+      render_404 if @project.nil?
+    end
 end

@@ -1,5 +1,7 @@
 %li
   %span.name= link_to project.name, users_project_path(project.user.id, project.id)
+  - @total_seconds = project.total_time
+  %span.total-time=render 'shared/total_time'
   %span.timestamp
     Created #{time_ago_in_words(project.created_at)} ago.
   - if current_user?(project.user)
