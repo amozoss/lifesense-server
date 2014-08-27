@@ -5,7 +5,7 @@
       %section= render 'shared/project_form'
     .span8
       %h3 Projects
-      %ol.projects= render @projects
+      %ol.projects= render @projects if !@projects.nil?
 - else
   .center.hero-unit
     %h1 LifeSense

@@ -3,7 +3,10 @@ class ProjectsController < ApplicationController
   before_action :correct_user, only: [:destroy, :show]
 
   def show
-    @time_record = @project.time_records.build if signed_in?
+    if signed_in?
+      @time_record = @project.time_records.first if !@project.stopped?
+      @time_record = @project.time_records.build if @time_record.nil? 
+    end
     @time_records = @project.time_records.paginate(page: params[:page])
   end
 

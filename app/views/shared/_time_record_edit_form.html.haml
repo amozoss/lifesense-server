@@ -1,0 +1,7 @@
+= form_for([@time_record.project.user, @time_record.project, @time_record], url: user_project_time_record_path(@time_record.project.user, @time_record.project, @time_record), hmtl: { method: :put })  do |f|
+  = render 'shared/error_messages', object: f.object
+  .field
+    = f.hidden_field :ended_at, :value => Time.now
+    = f.submit "Stop", class: "btn btn-large btn-primary"
+
+

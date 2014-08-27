@@ -1,8 +1,9 @@
-= form_for(@time_record) do |f|
+= form_for([@time_record.project.user, @time_record.project, @time_record]) do |f|
   = render 'shared/error_messages', object: f.object
   .field
     = f.text_area :description, placeholder: "Description (Optional)"
     = f.hidden_field :project_id, :value => params[:project_id]
-    = f.hidden_field :started_at, :value => Time.now
 
-  = f.submit "Create", class: "btn btn-large btn-primary"
+    = f.hidden_field :started_at, :value => Time.now
+    = f.submit "Start", class: "btn btn-large btn-primary"
+

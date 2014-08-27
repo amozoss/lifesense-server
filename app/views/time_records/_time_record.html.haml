@@ -6,7 +6,7 @@
     - elsif time_record.started_at != nil 
       Started #{time_ago_in_words(time_record.started_at)} ago.
   - if current_user?(time_record.project.user)
-    = link_to "delete", time_record, method: :delete, |
+    = link_to "delete", user_project_time_record_path(time_record.project.user, time_record.project, time_record), method: :delete, |
       data: { confirm: "You sure?" },               |
       title: time_record.description                      |
 

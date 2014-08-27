@@ -1,9 +1,10 @@
 LifeSense::Application.routes.draw do
-  resources :users
   resources :sessions, only: [:new, :create, :destroy]
-  resources :projects, only: [:show, :create, :destroy]
-  resources :time_records, only: [:create, :destroy]
-  get       "/users/:user_id/projects/:project_id", to:  "projects#show", as: :users_project
+  resources :users do
+    resources :projects, only: [:show, :create, :destroy] do
+      resources :time_records
+    end
+  end
 
   root 'static_pages#home'
   match '/signup',  to: 'users#new',            via: 'get'

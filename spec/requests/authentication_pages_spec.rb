@@ -53,6 +53,8 @@ describe "Authentication" do
 
     describe "for non-signed-in users" do
       let(:user) { FactoryGirl.create(:user) }
+      let(:project) { FactoryGirl.create(:project, user: user) }
+      let(:time_record) { FactoryGirl.create(:time_record, project: project) }
 
       describe "when attempting to visit a protected page" do
         before do
@@ -73,12 +75,17 @@ describe "Authentication" do
       describe "in the Projects controller" do
 
         describe "submitting to the create action" do
-          before { post projects_path }
+          before do
+            post user_projects_path(user, project )
+          end
           specify { expect(response).to redirect_to(signin_path) }
         end
 
         describe "submitting to the destroy action" do
-          before { delete project_path(FactoryGirl.create(:project)) }
+          before do
+            delete user_project_path(project.user, project)
+          end
+
           specify { expect(response).to redirect_to(signin_path) }
         end
       end
@@ -86,12 +93,17 @@ describe "Authentication" do
       describe "in the Time Records controller" do
 
         describe "submitting to the create action" do
-          before { post time_records_path }
+          before { post user_project_time_records_path(user, project, time_record) }
           specify { expect(response).to redirect_to(signin_path) }
         end
 
         describe "submitting to the destroy action" do
-          before { delete time_record_path(FactoryGirl.create(:time_record)) }
+          before { delete user_project_time_record_path(user, project, FactoryGirl.create(:time_record, project:project)) }
+          specify { expect(response).to redirect_to(signin_path) }
+        end
+
+        describe "submitting to the destroy action" do
+          before { put user_project_time_record_path(user, project, FactoryGirl.create(:time_record, project:project)) }
           specify { expect(response).to redirect_to(signin_path) }
         end
       end
@@ -120,6 +132,12 @@ describe "Authentication" do
       let(:user) { FactoryGirl.create(:user) }
       let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }
       before { sign_in user, no_capybara: true }
+
+      describe "submitting a GET request to the Users#edit action" do
+        before { get edit_user_path(wrong_user) }
+        specify { expect(response.body).not_to match(full_title('Edit user')) }
+        specify { expect(response.status).to eq(404) }
+      end
 
       describe "submitting a GET request to the Users#edit action" do
         before { get edit_user_path(wrong_user) }

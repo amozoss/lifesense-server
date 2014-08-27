@@ -32,12 +32,12 @@ describe Project do
     it { should_not be_valid }
   end
 
- describe "time_record associations" do
+  describe "time_record associations" do
 
     before { @project.save }
 
     let!(:older_time_record) do
-      FactoryGirl.create(:time_record, project: @project, started_at: 1.day.ago)
+      FactoryGirl.create(:time_record, project: @project, started_at: 1.day.ago, ended_at: 23.hours.ago)
     end
     let!(:newer_time_record) do
       FactoryGirl.create(:time_record, project: @project, started_at: 1.hour.ago)
@@ -45,6 +45,10 @@ describe Project do
 
     it "should have the right time_records in the right order" do
       expect(@project.time_records.to_a).to eq [newer_time_record, older_time_record]
+    end
+
+    it "should say time is not stopped" do
+      expect(@project.stopped?).to eq false
     end
 
     it "should destroy associated time_records" do
@@ -57,4 +61,19 @@ describe Project do
     end
   end
 
+  describe "time_record associations" do
+
+    before { @project.save }
+
+    let!(:older_time_record) do
+      FactoryGirl.create(:time_record, project: @project, started_at: 1.day.ago, ended_at: 23.hours.ago)
+    end
+    let!(:newer_time_record) do
+      FactoryGirl.create(:time_record, project: @project, started_at: 1.hour.ago, ended_at: 1.minute.ago)
+    end
+
+    it "should say time is not stopped" do
+      expect(@project.stopped?).to eq true
+    end
+  end
 end
