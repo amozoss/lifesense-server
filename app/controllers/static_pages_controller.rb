@@ -17,4 +17,7 @@ class StaticPagesController < ApplicationController
 
   def meeting
   end
+
+  def milestones
+  end
 end
