@@ -20,4 +20,10 @@ class StaticPagesController < ApplicationController
 
   def milestones
   end
+
+  def schedule
+  end
+
+  def status
+  end
 end
